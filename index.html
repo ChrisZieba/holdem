@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>holdem</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="title">Your Hand 
+        <div id="hero-results" class="hero-results"></div>        
+      </div>
+      <div class="contents">
+        <select data-value="0" autocomplete="off">
+          <option value="0" selected="true">A♠</option>
+          <option value="48" disabled="true">2♠</option>
+          <option value="44">3♠</option>
+          <option value="40">4♠</option>
+          <option value="36">5♠</option>
+          <option value="32">6♠</option>
+        </select>
+
+        <select data-value="1" autocomplete="off">
+          <option value="0" disabled="true">A♠</option>
+          <option value="48" selected="true">2♠</option>
+          <option value="44">3♠</option>
+          <option value="40">4♠</option>
+          <option value="36">5♠</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="title">Community Cards</div>
+      <div class="contents">
+        <select data-value="2" autocomplete="off">
+          <option value="255">🂠</option>
+          <option value="0" disabled="true">A♠</option>
+          <option value="48" disabled="true">2♠</option>
+          <option value="44">3♠</option>
+          <option value="40">4♠</option>
+        </select>
+
+        <select data-value="3" autocomplete="off">
+          <option value="255">🂠</option>
+          <option value="0" disabled="true">A♠</option>
+          <option value="48" disabled="true">2♠</option>
+        </select>
+
+        <select data-value="4" autocomplete="off">
+          <option value="255">🂠</option>
+          <option value="0" disabled="true">A♠</option>
+          <option value="48" disabled="true">2♠</option>
+          <option value="44">3♠</option>
+          <option value="40">4♠</option>
+
+        </select>
+
+        <select data-value="5" autocomplete="off">
+          <option value="255" selected="true">🂠</option>
+          <option value="0" disabled="true">A♠</option>
+          <option value="48" disabled="true">2♠</option>
+          <option value="44">3♠</option>
+        </select>
+
+        <select data-value="6" autocomplete="off">
+          <option value="255" selected="true">🂠</option>
+          <option value="0" disabled="true">A♠</option>
+
+        </select>
+      </div>
+    </div>
+
+
+    <div class="container">
+      <div class="title">Opponent Range <div><button id="clear-range">Clear</button></div></div>
+      <div class="contents">
+        <table id="villian-range" class="range-table">
+          <tbody>
+            <tr>
+              <td data-value="0" class="pair">AA</td>
+              <td data-value="1" class="suited">AKs</td>
+              <td data-value="2" class="suited">AQs</td>
+              <td data-value="3" class="suited">AJs</td>
+              <td data-value="4" class="suited">ATs</td>
+              <td data-value="5" class="suited">A9s</td>
+              <td data-value="6" class="suited">A8s</td>
+              <td data-value="7" class="suited">A7s</td>
+              <td data-value="8" class="suited">A6s</td>
+              <td data-value="9" class="suited">A5s</td>
+              <td data-value="10" class="suited">A4s</td>
+              <td data-value="11" class="suited">A3s</td>
+              <td data-value="12" class="suited">A2s</td>
+            </tr>
+
+          </tbody>
+        </table>
+
+
+      </div>
+    </div>
+
+    <button>Simulate</button>
+
+    <script src="test.js"></script>
+  </body>
+</html>
