@@ -1,0 +1,1 @@
+bool contains(uint8_t *arr, int val, int size);
