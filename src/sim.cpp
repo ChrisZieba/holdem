@@ -36,11 +36,3 @@
 int sim(uint8_t h0, uint8_t h1) {
   return 0;
 }
-
-// This is the functon that's exported for use in javaScript
-int gen(uint8_t *heroCards, uint8_t *villianRange) {
-  return 0;
-}
-
-
-int main() {}
