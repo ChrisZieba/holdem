@@ -27,8 +27,8 @@
 #include <random>
 
 #include "emscripten.h"
-#include "Sim.h"
-#include "Eval/SevenEval.h"
+#include "sim.h"
+#include "eval/SevenEval.h"
 
 
 
