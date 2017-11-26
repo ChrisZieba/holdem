@@ -274,7 +274,48 @@ document.addEventListener("DOMContentLoaded", () => {
       const heroResults = document.getElementById('hero-results');
       opponentResults.innerHTML = "";
       heroResults.innerHTML = "";
+      let opponentOutput = `
+        <table class="opponent-results-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Win</th>
+              <th>Lose</th>
+              <th>Tie</th>
+              <th>Simulations</th>
+            </tr>
+          </thead>
+          <tbody>`;
 
+      Object.entries(hands).sort((a, b) => b[1].l/b[1].s - a[1].l/a[1].s).forEach(hand => {
+        totalSimulations += hand[1].s;
+        totalWins += hand[1].w;
+        totalLosses += hand[1].l;
+        totalTies += hand[1].t;
+
+        opponentOutput += `
+          <tr>
+            <td>${prettyHand(hand[0], true)}</span></td>
+            <td>${((hand[1].l/hand[1].s)*100).toLocaleString(undefined, {minimumFractionDigits: 3, maximumFractionDigits: 3})}%</td>
+            <td>${((hand[1].w/hand[1].s)*100).toLocaleString(undefined, {minimumFractionDigits: 3, maximumFractionDigits: 3})}%</td>
+            <td>${((hand[1].t/hand[1].s)*100).toLocaleString(undefined, {minimumFractionDigits: 3, maximumFractionDigits: 3})}%</td>
+            <td>${((hand[1].s)*2).toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
+          </tr>`;
+      });
+
+      opponentOutput += '</tbody></table>'
+      opponentResults.innerHTML = opponentOutput;
+      t1 = performance.now();
+
+      let heroOutput = `
+        <div class="perf">Processed <span class="badge">${(totalSimulations*2).toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}</span> simulations in <span class="badge">${(t1-t0).toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})} ms</span> using <span class="badge">${WORKERS.length}</span> worker(s)</div>
+        <div class="totals">
+          <span class="label">Total Win:</span> <span class="badge">${((totalWins/totalSimulations)*100).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}%</span>
+          <span class="label">Lose:</span> <span class="badge">${((totalLosses/totalSimulations)*100).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}%</span>
+          <span class="label">Tie:</span> <span class="badge">${((totalTies/totalSimulations)*100).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}%</span>
+        </div>
+      `;
+      heroResults.innerHTML = heroOutput;
     };
   });
 
