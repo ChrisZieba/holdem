@@ -4,6 +4,8 @@
 
 A texas holdem simulator build with WebAssembly and web workers.
 
+![alt text](https://github.com/ChrisZieba/holdem/raw/master/common/demo.png "Click for demo")
+
 Demo
 ---
 
