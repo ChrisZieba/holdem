@@ -30,13 +30,12 @@
 
 extern "C" {
   // This is the functon that's exported for use in javaScript.
-  // When compiling WASM we use the option `-s EXPORTED_FUNCTIONS="['_gen']"`, notice the underscore before `gen`
+  // When compiling WASM we use the option `-s EXPORTED_FUNCTIONS="['_run']"`, notice the underscore before `run`
   int run(uint8_t *heroCards, uint8_t *villianRange, int villianRangeCount, uint8_t *board, int boardSize, int simCount) {
     int totalWin = 0, totalLoss = 0, totalTie = 0, totalSimulations = 0;
 
-    // The villian range is divided by two because the inputs is the flattenede range, for examepl
-    // if the UI selected AKs, that means we pass {0,1,0,2,0,3,1,2,1,3,2,3} and each two indexes
-    // are a hand combination. 0,1 means ace king of spaces, etc/
+    // If the UI selected AKs, that means we pass {0,1,0,2,0,3,1,2,1,3,2,3} and each two indexes
+    // are a hand combination. 0,1 means ace king of spaces, etc.
     for (int i = 0; i < villianRangeCount; i+=2) {
       int comboWin = 0, comboLoss = 0, comboTie = 0, comboSimulations = 0;
 
@@ -62,14 +61,14 @@ extern "C" {
 
       // Pass back the info for this specific hand combination so we can show it in the UI
       EM_ASM({
-        Module.cc([$0,$1,$2,$3,$4,$5,$6]);
+        Module.cc([$0, $1, $2, $3, $4, $5, $6]);
       }, 0, comboSimulations, comboWin, comboTie, comboLoss, villianRange[i], villianRange[i+1]);
 
     }
 
     // This calls the JavaScript worker which in turn calls postMessage with the data back to the main thread
     EM_ASM({
-      Module.cc([$0 ,$1,$2,$3,$4]);
+      Module.cc([$0 ,$1, $2, $3, $4]);
     }, 1, totalSimulations, totalWin, totalTie, totalLoss);
 
     return 0;
