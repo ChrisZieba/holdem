@@ -40,6 +40,7 @@ table.range-table {
   border-spacing: 2px;
   border-collapse: separate;
   max-width: 100%;
+  margin: 5px;
 }
 
 table.range-table tbody {
@@ -57,6 +58,8 @@ table.range-table td {
   height: 34px;
   font-size: 12px;
   cursor: pointer;
+  color: black;
+  font-family: monospace;
 }
 
 table.range-table td.pair {
@@ -67,6 +70,8 @@ table.range-table td.pair {
 table.range-table td.suited { background-color: #c7e6c7; }
 table.range-table td.offsuit { background-color: #f4cecd; }
 table.range-table td.pair.active { background-color: #9e9e9e; }
+table.range-table td.suited.active { background-color: #80c780; }
+table.range-table td.offsuit.active { background-color: #e27c79; }
 
 select {
   font-size: 140%;
@@ -74,12 +79,13 @@ select {
   padding: 1px;
   margin: 2px;
   letter-spacing: 2px;
-
   font-weight: bold;
 }
+
 .container {
   border: 1px solid #ddd;
   margin: 10px 0;
+  float: left;
   background-color: white;
   margin: 5px;
 }
@@ -89,7 +95,8 @@ select {
   border-style: solid;
   border-width: 0 0 1px 0;
   background-color: #f5f5f5;
-  padding: 4px;
+  color: #333;
+  padding: 5px;
 }
 
 .container .contents { padding: 5px; }
@@ -108,21 +115,30 @@ select {
 .hero-hand-container { border: 1px solid #e1e1e1; }
 
 .opponent-results {
+  height: 320px;
+  overflow: auto;
   padding:5px;
   margin: 5px;
 }
+
 .hero-results {
   margin: 5px;
 }
+
 .hero-results .label {
   font-weight: bold;
+
 }
+
 .hero-results .badge {
   font-family: monospace;
   font-size: 95%;
   border: 1px solid #e1e1e1;
+  border-radius: 2px;
+  background-color: #ddd;
   padding: 1px 2px;
-  margin-right: 5px;
+  margin-right: 2px;
+  border-radius: 2px;
 }
 
 .perf { margin: 10px 0; }
@@ -141,6 +157,7 @@ table.opponent-results-table th {
 
 table.opponent-results-table td {
   font-size: 100%;
+  font-family: monospace;
   padding:5px 15px;
   text-align: right;
 }
@@ -151,17 +168,72 @@ table.opponent-results-table tbody {
 }
 
 table.opponent-results-table tr { display: table-row; }
+table.opponent-results-table tr:nth-child(even) { background: white; }
+table.opponent-results-table tr:nth-child(odd) { background: #f5f5f5; }
 
 .simulate-btn {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 4px 15px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   cursor: pointer;
   outline: none;
 }
 
 .clear-range-btn {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
   outline: none;
   padding: 4px 15px;
 }
+
 .options {
   margin: 5px;
   float:left;
+}
+
+.options .tier-check {
+  float:left;
+  width: 100px;
+  font-size: 85%;
+  font-family: monospace;
+}
+
+@media only screen and (max-width: 767px), only screen and (max-device-width: 767px) {
+  table.range-table td {
+    width: 24px;
+    height: 24px;
+    font-size: 11px;
+  }
+  select {
+    font-size: 110%;
+  }
+
+  .opponent-results {
+    padding:1px;
+    margin: 1px;
+  }
+  table.opponent-results-table {
+    border-spacing: 1px;
+
+  }
+
+  table.opponent-results-table th {
+    padding:2px 5px;
+  }
+
+  table.opponent-results-table td {
+    padding:2px 5px;
+  }
+
 }
