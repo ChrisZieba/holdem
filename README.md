@@ -2,7 +2,47 @@
 
 [![Build Status](https://travis-ci.org/ChrisZieba/holdem.svg)](https://travis-ci.org/ChrisZieba/holdem)
 
-A texas holdem simulator build with WASM and web workers.
+A texas holdem simulator build with WebAssembly and web workers.
+
+Demo
+---
+
+Installing
+---
+
+```
+make wasm
+```
+
+Calling `make` will drop the compiled wasm and a javascript "glue" file into the `/build` directory. You can drop those files on a webserver and just open the `index.html` page to get up and running.
+
+
+FAQ
+---
+* Why don't you use the `--proxy-to-worker` option from `emscripten`?
+  > I tried using this flag, but the `.js` file it produced was quite large and I could not get the message passing to work to the main thread.
+
+* What's a simulation?
+  > A simulation plays a hand out as if the players are all in and no action is left. For example, if the board only has 3 cards (flop) and you run the simulation, the board will complete (turn and river) for every possible combination of hands in the oppoopenet range vs. the hero hand.
+
+* Why doesn't this use to speed up hand comparisons?
+  > Using a pre-computed table of values requires a large download (~100mb) before the app can be run.
+
+* What browsers does this work on?
+  > So far, I've tested on the following browsers  
+  > 
+  >  * FireFox 57 (Mac OS 10, Ubuntu 16.04, Windows 10)
+  >  * Chrome 61 (Mac OS 10, Windows 10, Android 6)
+  >  * Safari 11 (Mac OS 10)
+  >  * Microsoft Edge 16 (Windows 10)
+
+
+Tests
+---
+
+```
+make tests
+```
 
 
 # Improvements
