@@ -1,25 +1,206 @@
-/**
-  holdem
+// holdem
 
-  Copyright (c) 2017 Chris Zieba http://chriszieba.com
+// Copyright (c) 2017 Chris Zieba http://chriszieba.com
 
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to deal
-  in the Software without restriction, including without limitation the rights
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
 
-  The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-  THE SOFTWARE.
-*/
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 
-  int sim(uint8_t h0, uint8_t h1, uint8_t v0, uint8_t v1, uint8_t b0, uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, int boardSize);
+
+#define ACE_ACE_PAIR 0
+#define ACE_KING_SUITED 1
+#define ACE_QUEEN_SUITED 2
+#define ACE_JACK_SUITED 3
+#define ACE_TEN_SUITED 4
+#define ACE_NINE_SUITED 5
+#define ACE_EIGHT_SUITED 6
+#define ACE_SEVEN_SUITED 7
+#define ACE_SIX_SUITED 8
+#define ACE_FIVE_SUITED 9
+#define ACE_FOUR_SUITED 10
+#define ACE_THREE_SUITED 11
+#define ACE_TWO_SUITED 12
+
+#define ACE_KING_OFFSUIT 13
+#define KING_KING_PAIR 14
+#define KING_QUEEN_SUITED 15
+#define KING_JACK_SUITED 16
+#define KING_TEN_SUITED 17
+#define KING_NINE_SUITED 18
+#define KING_EIGHT_SUITED 19
+#define KING_SEVEN_SUITED 20
+#define KING_SIX_SUITED 21
+#define KING_FIVE_SUITED 22
+#define KING_FOUR_SUITED 23
+#define KING_THREE_SUITED 24
+#define KING_TWO_SUITED 25
+
+#define ACE_QUEEN_OFFSUIT 26
+#define KING_QUEEN_OFFSUIT 27
+#define QUEEN_QUEEN_PAIR 28
+#define QUEEN_JACK_SUITED 29
+#define QUEEN_TEN_SUITED 30
+#define QUEEN_NINE_SUITED 31
+#define QUEEN_EIGHT_SUITED 32
+#define QUEEN_SEVEN_SUITED 33
+#define QUEEN_SIX_SUITED 34
+#define QUEEN_FIVE_SUITED 35
+#define QUEEN_FOUR_SUITED 36
+#define QUEEN_THREE_SUITED 37
+#define QUEEN_TWO_SUITED 38
+
+#define ACE_JACK_OFFSUIT 39
+#define KING_JACK_OFFSUIT 40
+#define QUEEN_JACK_OFFSUIT 41
+#define JACK_JACK_PAIR 42
+#define JACK_TEN_SUITED 43
+#define JACK_NINE_SUITED 44
+#define JACK_EIGHT_SUITED 45
+#define JACK_SEVEN_SUITED 46
+#define JACK_SIX_SUITED 47
+#define JACK_FIVE_SUITED 48
+#define JACK_FOUR_SUITED 49
+#define JACK_THREE_SUITED 50
+#define JACK_TWO_SUITED 51
+
+#define ACE_TEN_OFFSUIT 52
+#define KING_TEN_OFFSUIT 53
+#define QUEEN_TEN_OFFSUIT 54
+#define JACK_TEN_OFFSUIT 55
+#define TEN_TEN_PAIR 56
+#define TEN_NINE_SUITED 57
+#define TEN_EIGHT_SUITED 58
+#define TEN_SEVEN_SUITED 59
+#define TEN_SIX_SUITED 60
+#define TEN_FIVE_SUITED 61
+#define TEN_FOUR_SUITED 62
+#define TEN_THREE_SUITED 63
+#define TEN_TWO_SUITED 64
+
+#define ACE_NINE_OFFSUIT 65
+#define KING_NINE_OFFSUIT 66
+#define QUEEN_NINE_OFFSUIT 67
+#define JACK_NINE_OFFSUIT 68
+#define TEN_NINE_OFFSUIT 69
+#define NINE_NINE_PAIR 70
+#define NINE_EIGHT_SUITED 71
+#define NINE_SEVEN_SUITED 72
+#define NINE_SIX_SUITED 73
+#define NINE_FIVE_SUITED 74
+#define NINE_FOUR_SUITED 75
+#define NINE_THREE_SUITED 76
+#define NINE_TWO_SUITED 77
+
+#define ACE_EIGHT_OFFSUIT 78
+#define KING_EIGHT_OFFSUIT 79
+#define QUEEN_EIGHT_OFFSUIT 80
+#define JACK_EIGHT_OFFSUIT 81
+#define TEN_EIGHT_OFFSUIT 82
+#define NINE_EIGHT_OFFSUIT 83
+#define EIGHT_EIGHT_PAIR 84
+#define EIGHT_SEVEN_SUITED 85
+#define EIGHT_SIX_SUITED 86
+#define EIGHT_FIVE_SUITED 87
+#define EIGHT_FOUR_SUITED 88
+#define EIGHT_THREE_SUITED 89
+#define EIGHT_TWO_SUITED 90
+
+#define ACE_SEVEN_OFFSUIT 91
+#define KING_SEVEN_OFFSUIT 92
+#define QUEEN_SEVEN_OFFSUIT 93
+#define JACK_SEVEN_OFFSUIT 94
+#define TEN_SEVEN_OFFSUIT 95
+#define NINE_SEVEN_OFFSUIT 96
+#define EIGHT_SEVEN_OFFSUIT 97
+#define SEVEN_SEVEN_PAIR 98
+#define SEVEN_SIX_SUITED 99
+#define SEVEN_FIVE_SUITED 100
+#define SEVEN_FOUR_SUITED 101
+#define SEVEN_THREE_SUITED 102
+#define SEVEN_TWO_SUITED 103
+
+#define ACE_SIX_OFFSUIT 104
+#define KING_SIX_OFFSUIT 105
+#define QUEEN_SIX_OFFSUIT 106
+#define JACK_SIX_OFFSUIT 107
+#define TEN_SIX_OFFSUIT 108
+#define NINE_SIX_OFFSUIT 109
+#define EIGHT_SIX_OFFSUIT 110
+#define SEVEN_SIX_OFFSUIT 111
+#define SIX_SIX_PAIR 112
+#define SIX_FIVE_SUITED 113
+#define SIX_FOUR_SUITED 114
+#define SIX_THREE_SUITED 115
+#define SIX_TWO_SUITED 116
+
+#define ACE_FIVE_OFFSUIT 117
+#define KING_FIVE_OFFSUIT 118
+#define QUEEN_FIVE_OFFSUIT 119
+#define JACK_FIVE_OFFSUIT 120
+#define TEN_FIVE_OFFSUIT 121
+#define NINE_FIVE_OFFSUIT 122
+#define EIGHT_FIVE_OFFSUIT 123
+#define SEVEN_FIVE_OFFSUIT 124
+#define SIX_FIVE_OFFSUIT 125
+#define FIVE_FIVE_PAIR 126
+#define FIVE_FOUR_SUITED 127
+#define FIVE_THREE_SUITED 128
+#define FIVE_TWO_SUITED 129
+
+#define ACE_FOUR_OFFSUIT 130
+#define KING_FOUR_OFFSUIT 131
+#define QUEEN_FOUR_OFFSUIT 132
+#define JACK_FOUR_OFFSUIT 133
+#define TEN_FOUR_OFFSUIT 134
+#define NINE_FOUR_OFFSUIT 135
+#define EIGHT_FOUR_OFFSUIT 136
+#define SEVEN_FOUR_OFFSUIT 137
+#define SIX_FOUR_OFFSUIT 138
+#define FIVE_FOUR_OFFSUIT 139
+#define FOUR_FOUR_PAIR 140
+#define FOUR_THREE_SUITED 141
+#define FOUR_TWO_SUITED 142
+
+#define ACE_THREE_OFFSUIT 143
+#define KING_THREE_OFFSUIT 144
+#define QUEEN_THREE_OFFSUIT 145
+#define JACK_THREE_OFFSUIT 146
+#define TEN_THREE_OFFSUIT 147
+#define NINE_THREE_OFFSUIT 148
+#define EIGHT_THREE_OFFSUIT 149
+#define SEVEN_THREE_OFFSUIT 150
+#define SIX_THREE_OFFSUIT 151
+#define FIVE_THREE_OFFSUIT 152
+#define FOUR_THREE_OFFSUIT 153
+#define THREE_THREE_PAIR 154
+#define THREE_TWO_SUITED 155
+
+#define ACE_TWO_OFFSUIT 156
+#define KING_TWO_OFFSUIT 157
+#define QUEEN_TWO_OFFSUIT 158
+#define JACK_TWO_OFFSUIT 159
+#define TEN_TWO_OFFSUIT 160
+#define NINE_TWO_OFFSUIT 161
+#define EIGHT_TWO_OFFSUIT 162
+#define SEVEN_TWO_OFFSUIT 163
+#define SIX_TWO_OFFSUIT 164
+#define FIVE_TWO_OFFSUIT 165
+#define FOUR_TWO_OFFSUIT 166
+#define THREE_TWO_OFFSUIT 167
+#define TWO_TWO_PAIR 168
+
+int sim(uint8_t h0, uint8_t h1, uint8_t v0, uint8_t v1, uint8_t b0, uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, int boardSize);
