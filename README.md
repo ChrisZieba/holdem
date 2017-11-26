@@ -16,7 +16,7 @@ Installing
 make wasm
 ```
 
-Calling `make` will drop the compiled wasm and a javascript "glue" file into the `/build` directory. You can drop those files on a webserver and just open the `index.html` page to get up and running.
+Calling `make` will place the compiled wasm and a javascript "glue" file into the `/build` directory. You can then include those files on a webserver and just open the `index.html` page to get up and running.
 
 
 FAQ
@@ -33,10 +33,11 @@ FAQ
 * Why don't you use the `--proxy-to-worker` option from `emscripten`?
   > I tried using this flag, but the `.js` file it produced was quite large and I could not get the message passing to work to the main thread.
 
+* Why doesn't this use a faster library for hand comparisons?
+  > There are many great options for an extrememly fast 7-card hand evaluator, but they all come with a large pre-computed table. Using a pre-computed table of values requires a large download (~100mb) before the app can be run, is not a great option for a web facing product. The speed difference between the [library](https://github.com/kennethshackleton/SKPokerEval) used in this app and other more well known libraries is not significant enough to justify the huge table downloads.
 
-
-* Why doesn't this use to speed up hand comparisons?
-  > Using a pre-computed table of values requires a large download (~100mb) before the app can be run.
+* How many simulations can this run?
+  > Depends on the system architecture, but with `8` workers it should run about `20` million simulations a second.
 
 * What browsers does this work on?
   > So far, I've tested on the following browsers  
@@ -59,14 +60,13 @@ make tests
 
 This was a weekend project for me, and as such a lot of corners were cut. If I had more time I would go back and improve a lot of things.
 
-
 - Faster card selector (remove select drop downs)
 - Better way to select multiple ranges (click & drag to highlight multiple cells)
 - Would like to add a lib like react to handle the state changes, and remove all the event listeners everywhere
 - Use `SIDE_MODULE`  ()[] to load wasm as side module
 - Loading the wasm is currently not optimal, a much better apprach would be to compile the wasmm and pass the bytes into the worker, something like this
 
-
+  ```
      fetch('go.wasm').then(response =>
        response.arrayBuffer()
      ).then(bytes =>
@@ -75,20 +75,21 @@ This was a weekend project for me, and as such a lot of corners were cut. If I h
        worker1.postMessage(mod);
        worker2.postMessage(mod);
      });
+  ```
 
-- As far as I know, WASM does not support pthreads (although there seem to be some emcc` flgas realted to it) but it would be nice if the c++ futures async library could be used as
-a possible replacement for web workers. The simulationm code could then be changed to something like this:
+- As far as I know, WASM does not support pthreads (although there seem to be some emcc` flgas realted to it) but it would be nice if the `C++` futures async library could be used as
+a possible replacement for web workers. The simulation code could then be changed to something like this:
 
+  ```
     std::vector<std::future<int>> futures;
 
     for (int i = 0; i < COMBOS; i+=1) {
-      futures.push_back (std::async([](uint8_t h0, uint8_t h1, uint8_t v0, uint8_t v1, uint8_t b0, uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4) {
+      futures.push_back (std::async([]() {
         // Run the simulation loop in new thread for each hand combination
-      } , heroCards[0], heroCards[1], COMBOS[i][0], COMBOS[i][1], board[0], board[1], board[2], board[3], board[4]));
+      } , heroCards[0], ...));
     }
 
-    for(auto &e : futures) {
-      std::cout << e.get() << std::endl;
-    }
+    for(auto &e : futures) std::cout << e.get() << std::endl;
+  ```
 
 - better data transfering between workers, use of sharedArray
