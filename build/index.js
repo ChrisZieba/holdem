@@ -128,23 +128,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.body.addEventListener("change", (event = {}) => {
     if (!event.target) return;
-    const name = +event.target.name;
-    if (selectedCards[name] === undefined) return;
 
-    const value = +event.target.value;
-    const prev = selectedCards[name];
-    selectedCards[name] = value;
+    if (event.target.nodeName === 'SELECT') {
+      const index = +event.target.getAttribute('data-value');
+      // The data-value of the selectors are the index of the selectedCards array
+      if (selectedCards[index] === undefined) return;
+      let value = +event.target.value;
+      const prev = selectedCards[index];
+      selectedCards[index] = value;
 
-    selectedCards.forEach((e, i) => {
-      if (name === i) {
-        updateOptions(i, value, prev, true);
-      } else {
-        updateOptions(i, value, prev);
-      }
-    });
-
+      selectedCards.forEach((e, i) => {
+        if (index === i) updateOptions(i, value, prev, true);
+        else updateOptions(i, value, prev);
+      });
+    } else if (event.target.nodeName === 'INPUT') {
+      updateTier(event.target);
+    }
   });
-
   // Event handler for the range table
   document.getElementById("villian-range").addEventListener("click", (event = {}) => {
     if (!event.target || !event.target.getAttribute('data-value')) return;
