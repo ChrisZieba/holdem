@@ -9,7 +9,7 @@
 Demo
 ---
 
-(http://chriszieba.com/2017/11/26/holdem)[http://chriszieba.com/2017/11/26/holdem]
+[http://chriszieba.com/2017/11/26/holdem](http://chriszieba.com/2017/11/26/holdem)
 
 Installing
 ---
