@@ -168,7 +168,37 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
+  document.getElementById("clear-range").addEventListener("click", (event = {}) => {
+    villianRange.fill(0);
+    const cells = document.querySelectorAll('td[data-value]');
+    cells.forEach((cell) => {
+      cell.classList.remove('active');
+    });
+    document.getElementById('opponent-results').innerHTML = "";
+    document.getElementById('hero-results').innerHTML = "";
+
+    // Clear all the check marks
+    const inputs = document.querySelectorAll('input[data-value]');
+    inputs.forEach((input) => {
+      input.checked = false;
+    });
+  });
+  
   document.getElementById("simulate").addEventListener("click", (event = {}) => {
+    t0 = performance.now();
+
+    if (selectedCards[0] === undefined || selectedCards[1] === undefined) return alert('The player hole cards must be set.')
+
+    // Validate the community cards
+    if ((selectedCards[2] !== 255 && (selectedCards[3] === 255 || selectedCards[4] === 255)) || 
+      (selectedCards[3] !== 255 && (selectedCards[2] === 255 || selectedCards[4] === 255)) || 
+      (selectedCards[4] !== 255 && (selectedCards[2] === 255 || selectedCards[3] === 255))) {
+      return alert('The flop must contain three cards.');
+    }
+
+    if (selectedCards[5] !== 255 && (selectedCards[4] === 255 || selectedCards[3] === 255 || selectedCards[2] === 255))return alert('The flop must be set if the turn is.');
+    if (selectedCards[6] !== 255 && selectedCards[5] === 255) return alert('The turn and flop must be set if the river is. Note that no simulations will be run when the board has played out already.');
+
     const hero = new Uint8Array([selectedCards[0], selectedCards[1]]);
     const board = Uint8Array.from(selectedCards.slice(2));
     const boardSize = board.reduce((count, value) =>{
@@ -184,16 +214,68 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!range.length) return alert('Select an opponent range to run simulations.');
 
+    document.getElementById("opponent-results").innerHTML = "";
+    document.getElementById("hero-results").innerHTML = "";
 
     // Get the combos
     const handCombos = Uint8Array.from(range.reduce((total, comboIdx) => {
-      total.push(...combos[comboIdx]);
+      total.push(...COMBOS[comboIdx]);
       return total;
     }, []).reduce((total, combo) => {
       total.push(...combo);
       return total;
     },[]));
-  });
 
+    const comboSimulations = [];
+    let completedCount = 0;
+
+    const fn = function(r) {
+      const type = r.data[0];
+      if (type !== 'SIM') return;
+
+      const data = r.data[1];
+
+      comboSimulations.push(data);
+      
+      if (completedCount >= WORKERS.length-1) {
+        completedCount = 0;
+        updateResults(comboSimulations);
+      }
+
+      completedCount+=1;
+    };
+
+    WORKERS.forEach((worker) => {
+      worker.postMessage([hero, handCombos, handCombos.length, board, boardSize]);
+      worker.onmessage = fn;
+    });
+
+    const updateResults = function(comboSubset) {
+      const hands = {};
+
+      comboSubset.forEach((worker) => {
+        worker.forEach((combo) => {
+          // Get the card hash
+          let cards = [combo[4], combo[5]].sort((a,b) => a - b);
+          cards = `${convertHand(cards[0])}${convertHand(cards[1])}`;
+          if (!hands[cards]) {
+            hands[cards] = { w:0, l:0, t:0, s:0 };
+          }
+
+        });
+      });
+
+      let totalSimulations = 0;
+      let totalWins = 0;
+      let totalLosses = 0;
+      let totalTies = 0;
+
+      const opponentResults = document.getElementById('opponent-results');
+      const heroResults = document.getElementById('hero-results');
+      opponentResults.innerHTML = "";
+      heroResults.innerHTML = "";
+
+    };
+  });
 
 },false);
