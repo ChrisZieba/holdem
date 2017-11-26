@@ -1,8 +1,8 @@
 # holdem
 
-[![Build Status](https://travis-ci.org/ChrisZieba/holdem.svg)](https://travis-ci.org/ChrisZieba/holdem)
+[![Build Status](https://travis-ci.org/ChrisZieba/holdem.svg)](https://travis-ci.org/ChrisZieba/holdem) ![](https://img.shields.io/badge/license-MIT-blue.svg)
 
-A texas holdem simulator build with WebAssembly and web workers.
+**holdem** is a heads-up (2 player) [Texas Hold'em](https://en.wikipedia.org/wiki/Texas_hold_%27em) simulator for hand ranges. It allows you to quickly calculate the total equity of your hand vs. a range of opponent hands. The simualtions are run in `C++` via WebAssembly using up to `8` web workers in parallel. This is pretty bare bones as far as range evaluators go, and there are many improvements I would like to make if I hade more time, see below. 
 
 ![alt text](https://github.com/ChrisZieba/holdem/raw/master/common/demo.png "Click for demo")
 
@@ -21,6 +21,9 @@ Calling `make` will drop the compiled wasm and a javascript "glue" file into the
 
 FAQ
 ---
+* Why did you make this?
+  > I put this together as a weekend project to learn more about `WebAssembly`.
+
 * Why don't you use the `--proxy-to-worker` option from `emscripten`?
   > I tried using this flag, but the `.js` file it produced was quite large and I could not get the message passing to work to the main thread.
 
