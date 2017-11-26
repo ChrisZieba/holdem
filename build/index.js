@@ -145,15 +145,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   });
 
+  // Event handler for the range table
   document.getElementById("villian-range").addEventListener("click", (event = {}) => {
     if (!event.target || !event.target.getAttribute('data-value')) return;
     const value = +event.target.getAttribute('data-value');
 
-
     // Toggle the cell
     villianRange[value] = !villianRange[value];
 
+    // Toggle color
+    if (event.target.classList.contains('active')) {
+      event.target.classList.remove('active');
+    } else {
+      event.target.classList.add('active');
+    }
+
+    if (villianRange[value]) return;
+    const input = document.querySelector(`input[data-value="${getTierValue(value)}"]:checked`);
+    if (!input) return;
+    input.checked = false;
+
   });
+
 
   document.getElementById("simulate").addEventListener("click", (event = {}) => {
     const hero = new Uint8Array([selectedCards[0], selectedCards[1]]);
