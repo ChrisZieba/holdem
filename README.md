@@ -4,7 +4,7 @@
 
 **holdem** is a heads-up (2 player) [Texas Hold'em](https://en.wikipedia.org/wiki/Texas_hold_%27em) simulator for hand ranges. It allows you to quickly calculate the total equity of your hand vs. a range of opponent hands. The simulations are calculated using `C++` via WebAssembly using up to `8` web workers in parallel. This is pretty bare bones as far as range evaluators go, and there are many improvements I would like to make if I hade more time, see below. 
 
-![alt text](https://github.com/ChrisZieba/holdem/raw/master/common/demo.png "Click for demo")
+[![MoodFuse](https://github.com/ChrisZieba/holdem/raw/master/common/demo.png)](http://chriszieba.com/2017/11/26/holdem)
 
 Demo
 ---
@@ -65,7 +65,7 @@ This was a weekend project for me, and as such a lot of corners were cut. If I h
 - Faster card selector (remove select drop downs)
 - Better way to select multiple ranges (click & drag to highlight multiple cells)
 - Would like to add a lib like react to handle the state changes, and remove all the event listeners everywhere
-- Use `SIDE_MODULE`  ()[] to load wasm as side module
+- Use `SIDE_MODULE` to load wasm as [side module](https://github.com/kripken/emscripten/wiki/Linking)
 - Loading the wasm is currently not optimal, a much better apprach would be to compile the wasmm and pass the bytes into the worker, something like this
 
   ```
